@@ -2,8 +2,9 @@
 
 //Global Variables
 Busmall.all = [];
-Busmall.allImages = [];
-// Busmall.theContainer = document.getElementById('imageContainer');
+// var filesNames = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
+// var imageNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntauin', 'unicorn', 'usb', 'water-can', 'wine-glass'];
+Busmall.theContainer = document.getElementById('imageContainer');
 
 //Constructor
 function Busmall(name, filepath, votes, views){
@@ -11,39 +12,56 @@ function Busmall(name, filepath, votes, views){
   this.filepath = filepath;
   this.votes = votes;
   this.views = views;
-  Busmall.allImages.push(this);
+  Busmall.all.push(this);
 }
 
 //Instances
-new Busmall ('Bag', 'img/bag.jpg');
-new Busmall ('Banana', 'img/banana.jpg');
-new Busmall ('Bathroom', 'img/bathroom.jpg');
-new Busmall ('Boots', 'img/boots.jpg');
-new Busmall ('Breakfast', 'img/breakfast.jpg');
-new Busmall ('Bubblegum', 'img/bubblegum.jpg');
-new Busmall ('Chair', 'img/chair.jpg');
-new Busmall ('Cthulhu', 'img/cthulhu.jpg');
-new Busmall ('Dog Duck', 'img/dog-duck.jpg');
-new Busmall ('Dragon', 'img/dragon.jpg');
-new Busmall ('Pen', 'img/pen.jpg');
-new Busmall ('Pet Sweep', 'img/pet-sweep.jpg');
-new Busmall ('Scissors', 'img/scissors.jpg');
-new Busmall ('Shark', 'img/shark.jpg');
-new Busmall ('Sweep', 'img/sweep.png');
-new Busmall ('Tauntaun', 'img/tauntaun.jpg');
-new Busmall ('Unicorn', 'img/unicorn.jpg');
-new Busmall ('USB', 'img/usb.gif');
-new Busmall ('Water Can', 'img/water-can.jpg');
-new Busmall ('Wine Glass', 'img/wine-glass.jpg');
+new Busmall ('bag', 'img/bag.jpg');
+new Busmall ('banana', 'img/banana.jpg');
+new Busmall ('bathroom', 'img/bathroom.jpg');
+new Busmall ('boots', 'img/boots.jpg');
+new Busmall ('breakfast', 'img/breakfast.jpg');
+new Busmall ('bubblegum', 'img/bubblegum.jpg');
+new Busmall ('chair', 'img/chair.jpg');
+new Busmall ('cthulhu', 'img/cthulhu.jpg');
+new Busmall ('dog-duck', 'img/dog-duck.jpg');
+new Busmall ('dragon', 'img/dragon.jpg');
+new Busmall ('pen', 'img/pen.jpg');
+new Busmall ('pet-sweep', 'img/pet-sweep.jpg');
+new Busmall ('scissors', 'img/scissors.jpg');
+new Busmall ('shark', 'img/shark.jpg');
+new Busmall ('sweep', 'img/sweep.png');
+new Busmall ('tauntaun', 'img/tauntaun.jpg');
+new Busmall ('unicorn', 'img/unicorn.jpg');
+new Busmall ('usb', 'img/usb.gif');
+new Busmall ('water-can', 'img/water-can.jpg');
+new Busmall ('wine-glass', 'img/wine-glass.jpg');
 
-var imgEl = document.getElementById('displayImage');
+var imgLe = document.getElementById('leftImage');
+var imgCe = document.getElementById('centerImage');
+var imgRi = document.getElementById('rightImage');
 
-imgEl.addEventListener('click', randomImage);
+// EVENT.TARGET WILL BE MY FRIEND
 
+// Busmall.randomIndex = function(){
+//   Math.floor(Math.random() * Busmall.all.length);
+// };
 
-function randomImage(){
-  var randomIndex = Math.floor(Math.random() * Busmall.allImages.length);
-  imgEl.src = Busmall.allImages[randomIndex].filepath;
+//IN PROGRESS -- NEED TO DIVIDE THE LOVE+++++++++++++++++++++++++
+function randomImage(left, center, right){
+  var randomIndex = Math.floor(Math.random() * Busmall.all.length);
+  imgLe.src = Busmall.all[randomIndex].filepath;
+  imgCe.src = Busmall.all[randomIndex].filepath;
+  imgRi.src = Busmall.all[randomIndex].filepath;
 }
+
+function imageContainer(){
+  randomImage();
+  imgLe.addEventListener('click', randomImage);
+  imgCe.addEventListener('click', randomImage);
+  imgRi.addEventListener('click', randomImage);
+}
+
+imageContainer();
 
 randomImage();
