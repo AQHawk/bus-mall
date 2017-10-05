@@ -3,17 +3,13 @@
 //Global Variables
 Busmall.all = [];
 Busmall.lastDisplayed = [];
-Busmall.votes = [];
-Busmall.names = [];
 Busmall.totalClicks = 0;
 Busmall.section = document.getElementById('imageContainer');
-Busmall.resultsList = document.getElementById('results');
 
-var barChart;
-var chartDrawn = false;
+var votes = [];
+var names = [];
 
-// var filesNames = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
-// var imageNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntauin', 'unicorn', 'usb', 'water-can', 'wine-glass'];
+
 
 //Constructor
 function Busmall(name, filepath, altText){
@@ -85,85 +81,57 @@ function randomImage(){
   Busmall.lastDisplayed.push(leftImage, centerImage, rightImage);
 }
 
-
-function handleClick(e){
-  if(e.target.id === 'imageContainer') {
-    return alert('Please click on a picture');
-  }
-
-
-  Busmall.totalClicks += 1;
-
-  for(var i = 0; i < Busmall.all.length; i++) {
-    if(event.target.alt === Busmall.all[i].altText) {
-      Busmall.all[i].votes += 1;
-    }
-  }
-
-//WORK BELOW HERE++++++++++++++++++++++++++++++
-  if(Busmall.totalClicks > 24){
-    Busmall.section.removeEventListener('click', handleClick);
-    showResults();
-  }
-
-  randomImage();
-}
-
-
-function showResults(){
-  for(var i = 0; i < Busmall.all.length; i++){
-    var leEl = document.createElement('li');
-    leEl.textContent = Busmall.all[i].name + ' has ' + Busmall.all[i].votes + ' votes in ' + Busmall.all[i].timesDisplayed + ' times shown.';
-    Busmall.resultsList.appendChild(leEl);
-  }
-}
-
-
-//++++++++++++ Chart Below ++++++++++++++++
-
-function updateChartArrays() {
+function updateChart() {
   for (var i = 0; i < Busmall.all.length; i++) {
-    names[i] = all[i].name;
-    votes[i] = all[i].votes;
+    names[i] = Busmall.all[i].name;
+    votes[i] = Busmall.all[i].votes;
   }
+
 }
 
 function tallyVote(thisPhoto) {
   for (var i = 0; i < Busmall.all.length; i++) {
     if (thisPhoto === Busmall.all[i].altText) {
       Busmall.all[i].votes++;
-      updateChartArrays();
+      console.log('Busmall.all.altText', Busmall.all[i].altText);
+      updateChart();
     }
   }
 }
 
+// ++++++++++++++++++CHART+++++++++++++++++++++++++++
+
 var data = {
-  labels: Busmall.names, // Do I need this to be Busmall.names???
+  labels: names,
   datasets: [
     {
-      data: Busmall.votes, // Do I need this to be Busmall.votes???
+      label: '# of Votes',
+      data: votes,
       backgroundColor: [
         'navy',
       ],
-      hoverBackgroundColor: [
-        'darkgreen',
-      ]
+      hoverBackgroundColor:
+        'navy',
+
     }]
+
 };
+
 
 function drawChart() {
   var ctx = document.getElementById('results-chart').getContext('2d');
-  barChart = new Chart(ctx,{
+  new Chart(ctx,{
     type: 'bar',
     data: data,
     options: {
       legend: {
         labels: {
-          fontColor: 'darkgreen',
+          fontColor: 'navy',
           fontSize: 18
         }
       },
-      responsive: false,
+      responsive: true,
+      maintainAspectRatio: true,
       animation: {
         duration: 1000,
         easing: 'easeOutBounce'
@@ -179,20 +147,8 @@ function drawChart() {
       }]
     }
   });
-  chartDrawn = true;
+  // chartDrawn;
 }
-
-
-if (showResults === true){
-  document.getElementById('imageContainer').hidden = true;
-  drawChart();
-}
-
-
-
-document.getElementById('results').addEventListener('click', function(){
-  document.getElementById('results').hidden = true;
-});
 
 
 document.getElementById('imageContainer').addEventListener('click', function(event){
@@ -200,12 +156,33 @@ document.getElementById('imageContainer').addEventListener('click', function(eve
     tallyVote(event.target.id);
   };
 
-  if (chartDrawn) {
-    barChart.update();
-  }
+  updateChart();
 });
 
+function handleClick(e) {
+  if (event.target.id === 'imageContainer') {
+    return alert('click an image please!');
+  }
 
+  Busmall.totalClicks += 1;
+
+  for(var i = 0; i < Busmall.all.length; i++) {
+    if(e.target.alt === Busmall.all[i].altText) {
+      Busmall.all[i].votes += 1;
+      updateChart();
+      console.log(Busmall.all[i].votes, ' votes');
+    }
+  }
+
+  if(Busmall.totalClicks > 24) {
+    Busmall.section.removeEventListener('click', handleClick);
+    document.getElementById('imageContainer').hidden = true;
+    //display the results
+    drawChart();
+  }
+
+  randomImage();
+}
 
 
 Busmall.section.addEventListener('click', handleClick);

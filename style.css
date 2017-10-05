@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+  border: 1px solid red;
+}
+
+img {
+  height: 400px;
+  display:inline;
+}
+
+.contain{
+    display: block;
+    vertical-align: middle;
+    text-align:center;
+}
+
+h1 {
+  color: navy;
+  font-size: 3em;
+  text-align: center;
+}
