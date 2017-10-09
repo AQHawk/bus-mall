@@ -104,18 +104,17 @@ function tallyVote(thisPhoto) {
 
 var data = {
   labels: names,
-  datasets: [
-    {
-      label: '# of Votes',
-      data: votes,
-      backgroundColor: [
-        'navy',
-      ],
-      hoverBackgroundColor:
-        'navy',
-
-    }]
-
+  datasets: [{
+    display: true,
+    label: '# of Votes',
+    data: votes,
+    backgroundColor: 'rgba(168, 203, 245, 0.75)',
+    borderColor:  'rgba(240, 244, 250, 1)',
+    borderWidth: 1,
+    hoverBackgroundColor:
+        'white',
+    fontSize: 18,
+  }]
 };
 
 function drawChart() {
@@ -126,11 +125,11 @@ function drawChart() {
     options: {
       legend: {
         labels: {
-          fontColor: 'navy',
-          fontSize: 18
+          fontColor: 'white',
+          fontSize: 20
         }
       },
-      responsive: true,
+      responsive: false,
       maintainAspectRatio: true,
       animation: {
         duration: 1000,
@@ -138,15 +137,36 @@ function drawChart() {
       }
     },
     scales: {
+      xAxes: [{
+        ticks: {
+          fontColor: 'white',
+          fontSize: 18,
+          stepSize: 1,
+          beginAtZero: true
+        },
+        gridLines: {
+          display: true,
+          color: 'white',
+
+        }
+      }],
       yAxes: [{
         ticks: {
-          max: 10,
-          min: 0,
-          stepSize: 1.0
+          fontColor: 'white',
+          fontSize: 18,
+          stepSize: 1,
+          beginAtZero: true
+        },
+        gridLines: {
+          display: true,
+          color: 'white',
+
         }
       }]
     }
   });
+  Chart.defaults.global.defaultFontColor = '#fff';
+
   // chartDrawn;
 }
 
