@@ -21,35 +21,38 @@ function Busmall(name, filepath, altText){
   Busmall.all.push(this);
 }
 
-//Instances
-new Busmall ('Bag', 'img/bag.jpg', 'bag');
-new Busmall ('Banana', 'img/banana.jpg', 'banana');
-new Busmall ('Bathroom', 'img/bathroom.jpg', 'bathroom');
-new Busmall ('Boots', 'img/boots.jpg', 'boots');
-new Busmall ('Breakfast', 'img/breakfast.jpg', 'breakfast');
-new Busmall ('Bubblegum', 'img/bubblegum.jpg', 'bubblegum');
-new Busmall ('Chair', 'img/chair.jpg', 'chair');
-new Busmall ('Cthulhu', 'img/cthulhu.jpg','cthulhu');
-new Busmall ('Dogduck', 'img/dog-duck.jpg', 'dogduck');
-new Busmall ('Dragon', 'img/dragon.jpg', 'dragon');
-new Busmall ('Pen', 'img/pen.jpg', 'pen');
-new Busmall ('Petsweep', 'img/pet-sweep.jpg', 'petsweep');
-new Busmall ('Scissors', 'img/scissors.jpg', 'scissors');
-new Busmall ('Shark', 'img/shark.jpg', 'shark');
-new Busmall ('Sweep', 'img/sweep.png', 'sweep');
-new Busmall ('Tauntaun', 'img/tauntaun.jpg', 'tauntaun');
-new Busmall ('Unicorn', 'img/unicorn.jpg','unicorn');
-new Busmall ('Usb', 'img/usb.gif', 'usb');
-new Busmall ('Watercan', 'img/water-can.jpg', 'watercan');
-new Busmall ('Wineglass', 'img/wine-glass.jpg', 'wineglass');
+
+
+if (localStorage.pixAll){
+  Busmall.all = JSON.parse(localStorage.pixAll);
+} else {
+  new Busmall ('Bag', 'img/bag.jpg', 'bag');
+  new Busmall ('Banana', 'img/banana.jpg', 'banana');
+  new Busmall ('Bathroom', 'img/bathroom.jpg', 'bathroom');
+  new Busmall ('Boots', 'img/boots.jpg', 'boots');
+  new Busmall ('Breakfast', 'img/breakfast.jpg', 'breakfast');
+  new Busmall ('Bubblegum', 'img/bubblegum.jpg', 'bubblegum');
+  new Busmall ('Chair', 'img/chair.jpg', 'chair');
+  new Busmall ('Cthulhu', 'img/cthulhu.jpg','cthulhu');
+  new Busmall ('Dogduck', 'img/dog-duck.jpg', 'dogduck');
+  new Busmall ('Dragon', 'img/dragon.jpg', 'dragon');
+  new Busmall ('Pen', 'img/pen.jpg', 'pen');
+  new Busmall ('Petsweep', 'img/pet-sweep.jpg', 'petsweep');
+  new Busmall ('Scissors', 'img/scissors.jpg', 'scissors');
+  new Busmall ('Shark', 'img/shark.jpg', 'shark');
+  new Busmall ('Sweep', 'img/sweep.png', 'sweep');
+  new Busmall ('Tauntaun', 'img/tauntaun.jpg', 'tauntaun');
+  new Busmall ('Unicorn', 'img/unicorn.jpg','unicorn');
+  new Busmall ('Usb', 'img/usb.gif', 'usb');
+  new Busmall ('Watercan', 'img/water-can.jpg', 'watercan');
+  new Busmall ('Wineglass', 'img/wine-glass.jpg', 'wineglass');
+}
 
 // Arrays to hold data for the chart
-
 
 var imgLe = document.getElementById('leftImage');
 var imgCe = document.getElementById('centerImage');
 var imgRi = document.getElementById('rightImage');
-
 
 function randomImage(){
   var leftImage = Math.floor(Math.random() * Busmall.all.length);
@@ -72,7 +75,6 @@ function randomImage(){
   imgRi.src = Busmall.all[rightImage].filepath;
   imgRi.alt = Busmall.all[rightImage].altText;
 
-
   Busmall.all[leftImage].timesDisplayed += 1;
   Busmall.all[centerImage].timesDisplayed += 1;
   Busmall.all[rightImage].timesDisplayed += 1;
@@ -86,7 +88,6 @@ function updateChart() {
     names[i] = Busmall.all[i].name;
     votes[i] = Busmall.all[i].votes;
   }
-
 }
 
 function tallyVote(thisPhoto) {
@@ -116,7 +117,6 @@ var data = {
     }]
 
 };
-
 
 function drawChart() {
   var ctx = document.getElementById('results-chart').getContext('2d');
@@ -150,7 +150,6 @@ function drawChart() {
   // chartDrawn;
 }
 
-
 document.getElementById('imageContainer').addEventListener('click', function(event){
   if (event.target.id !== 'imageContainer') {
     tallyVote(event.target.id);
@@ -180,10 +179,8 @@ function handleClick(e) {
     //display the results
     drawChart();
   }
-
   randomImage();
 }
-
 
 Busmall.section.addEventListener('click', handleClick);
 
