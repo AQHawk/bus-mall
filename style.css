@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  border: 1px solid red;
+  
 }
 
 img {
@@ -17,5 +17,11 @@ img {
 h1 {
   color: navy;
   font-size: 3em;
+  text-align: center;
+}
+
+h2 {
+  color: navy;
+  font-size: 2.5em;
   text-align: center;
 }
