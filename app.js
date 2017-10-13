@@ -9,8 +9,6 @@ Busmall.section = document.getElementById('imageContainer');
 var votes = [];
 var names = [];
 
-
-
 //Constructor
 function Busmall(name, filepath, altText){
   this.name = name;
@@ -21,11 +19,19 @@ function Busmall(name, filepath, altText){
   Busmall.all.push(this);
 }
 
+if(localStorage.all) {
+  console.log('LOCAL STORAGE EXISTS');
+  Busmall.all = JSON.parse(localStorage.all);
+  console.log('Summed Votes from Storage: ', localStorage.summedVotes);
+  Busmall.summedVotes = parseInt(localStorage.summedVotes);
 
+}else {
+  console.log('NO LOCAL STORAGE');
+  Busmall.all = [];
+  Busmall.summedVotes = 0;
+  Busmall.totalVotes = [];
+  Busmall.totalViews = [];
 
-if (localStorage.pixAll){
-  Busmall.all = JSON.parse(localStorage.pixAll);
-} else {
   new Busmall ('Bag', 'img/bag.jpg', 'bag');
   new Busmall ('Banana', 'img/banana.jpg', 'banana');
   new Busmall ('Bathroom', 'img/bathroom.jpg', 'bathroom');
@@ -46,7 +52,8 @@ if (localStorage.pixAll){
   new Busmall ('Usb', 'img/usb.gif', 'usb');
   new Busmall ('Watercan', 'img/water-can.jpg', 'watercan');
   new Busmall ('Wineglass', 'img/wine-glass.jpg', 'wineglass');
-}
+
+};
 
 // Arrays to hold data for the chart
 
@@ -184,6 +191,7 @@ function handleClick(e) {
   }
 
   Busmall.totalClicks += 1;
+  Busmall.summedVotes += 1;
 
   for(var i = 0; i < Busmall.all.length; i++) {
     if(e.target.alt === Busmall.all[i].altText) {
@@ -196,7 +204,9 @@ function handleClick(e) {
   if(Busmall.totalClicks > 24) {
     Busmall.section.removeEventListener('click', handleClick);
     document.getElementById('imageContainer').hidden = true;
-    //display the results
+    localStorage.all = JSON.stringify(Busmall.all);
+    localStorage.summedVotes = Busmall.summedVotes;
+
     drawChart();
   }
   randomImage();
